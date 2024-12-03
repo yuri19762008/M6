@@ -1,0 +1,13 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 mb-4">Bienvenido al Sistema de Libros</h1>
+        <a href="{% url 'input_book' %}" class="btn btn-primary btn-lg">
+            Ir al formulario de libros
+        </a>
+    </div>
+</div>
+{% endblock %}
