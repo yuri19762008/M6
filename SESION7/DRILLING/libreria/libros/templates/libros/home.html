@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Libros</h1>
+    <div class="row">
+        {% for book in books %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.titulo }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ book.autor }}</h6>
+                        <p class="card-text">Valoración: {{ book.valoracion }}</p>
+                        <a href="{% url 'book_delete' book.pk %}" class="btn btn-danger btn-sm">
+                            Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No hay libros registrados.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Ingresar Libro{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Ingresar Libro</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button "Guardar" button_type="submit" button_class="btn-primary" %}
+    </form>
+{% endblock %}
