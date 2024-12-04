@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center mb-5">
+            <h1 class="display-4 fw-bold mb-4">
+                Bienvenidos a mi Biblioteca Digital
+                <i class="fas fa-book-open text-primary ms-2"></i>
+            </h1>
+            <p class="lead text-muted">
+                Descubre nuestra colección de libros especializados en Django y desarrollo web
+            </p>
+            <a href="{% url 'listbook' %}" class="btn btn-custom mt-3">
+                Explorar Libros <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-book fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Biblioteca Completa</h5>
+                    <p class="card-text text-muted">Explora nuestra colección de libros técnicos</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-star fa-3x mb-3 text-warning"></i>
+                    <h5 class="card-title">Mejor Valorados</h5>
+                    <p class="card-text text-muted">Descubre los libros más populares</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-graduation-cap fa-3x mb-3 text-success"></i>
+                    <h5 class="card-title">Aprende Django</h5>
+                    <p class="card-text text-muted">Recursos para todos los niveles</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
