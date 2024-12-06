@@ -81,3 +81,15 @@ def listbook(request):
         'todos_los_libros': lista_libros
     }
     return render(request, 'libros/listbook.html', context)
+
+from django.contrib.auth.decorators import permission_required
+
+@login_required
+@permission_required('libros.development', raise_exception=True)
+def listbook(request):
+    libros_valorados = [libro for libro in lista_libros if libro.valoracion > 1500]
+    context = {
+        'libros_valorados': libros_valorados,
+        'todos_los_libros': lista_libros
+    }
+    return render(request, 'libros/listbook.html', context)
