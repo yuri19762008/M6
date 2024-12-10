@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from .models import Profile
 from .models import Libro
@@ -81,3 +81,8 @@ def listbook(request):
         'todos_los_libros': todos_los_libros
     }
     return render(request, 'libros/listbook.html', context)
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, '¡Has cerrado sesión exitosamente!')
+    return redirect('login')
