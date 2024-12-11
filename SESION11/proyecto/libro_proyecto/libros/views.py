@@ -86,3 +86,27 @@ def logout_view(request):
     logout(request)
     messages.success(request, '¡Has cerrado sesión exitosamente!')
     return redirect('login')
+
+@login_required
+def inputbook(request):
+    if request.method == 'POST':
+        titulo = request.POST.get('titulo')
+        autor = request.POST.get('autor')
+        valoracion = request.POST.get('valoracion')
+        
+        try:
+            valoracion = int(valoracion)
+            if 0 <= valoracion <= 10000:
+                Libro.objects.create(
+                    titulo=titulo,
+                    autor=autor,
+                    valoracion=valoracion
+                )
+                messages.success(request, 'Libro agregado exitosamente!')
+                return redirect('listbook')
+            else:
+                messages.error(request, 'La valoración debe estar entre 0 y 10000')
+        except ValueError:
+            messages.error(request, 'La valoración debe ser un número válido')
+    
+    return render(request, 'libros/inputbook.html')
