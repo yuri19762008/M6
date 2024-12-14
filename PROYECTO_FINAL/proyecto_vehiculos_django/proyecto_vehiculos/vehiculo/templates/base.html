@@ -1,0 +1,51 @@
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Venta Virtual de Vehículos</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}">Catálogo de Vehículos</a>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{% url 'index' %}">Inicio</a>
+                <a class="nav-item nav-link" href="{% url 'agregar_vehiculo' %}">Agregar</a>
+                <a class="nav-item nav-link" href="{% url 'listar_vehiculos' %}">Listar</a>
+                <a class="nav-item nav-link" href="{% url 'registro_usuario' %}">Registrarse</a>
+                {% if user.is_authenticated %}
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Bienvenido, {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
+
+                {% else %}
+                    <a class="nav-item nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                    
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-12 col-md-8 offset-md-2">
+                {% block content %}{% endblock %}
+                
+            </div>
+        </div>
+    </div>
+    {% bootstrap_javascript %}
+    <footer class="footer bg-dark text-light py-4 w-100">
+        {% include 'footer.html' %}
+    </footer>
+</body>
+
+</html>

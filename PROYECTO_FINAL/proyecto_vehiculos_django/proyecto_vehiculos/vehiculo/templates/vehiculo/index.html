@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center mb-5">Catálogo de Vehículos</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://cidef.cl/wp-content/uploads/2023/09/t5evo-1.png" class="card-img-top" alt="Vehículos Nuevos">
+                <div class="card-body">
+                    <h5 class="card-title">Vehículos Nuevos</h5>
+                    <p class="card-text">Descubre nuestra amplia gama de vehículos nuevos con las últimas tecnologías y diseños innovadores.</p>
+                    <a href="{% url 'listar_vehiculos' %}" class="btn btn-primary">Ver catálogo</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="	https://cidef.cl/wp-content/uploads/2024/08/PrincipalFoton-g9.png" class="card-img-top" alt="Ofertas Especiales">
+                <div class="card-body">
+                    <h5 class="card-title">Ofertas Especiales</h5>
+                    <p class="card-text">Aprovecha nuestras ofertas exclusivas y llévate el vehículo de tus sueños a un precio inmejorable.</p>
+                    <a href="{% url 'listar_vehiculos' %}" class="btn btn-primary">Ver ofertas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://cidef.cl/wp-content/uploads/2023/09/S50EV-1.png" class="card-img-top" alt="Servicio Postventa">
+                <div class="card-body">
+                    <h5 class="card-title">Servicio Postventa</h5>
+                    <p class="card-text">Ofrecemos un servicio de mantenimiento y atención al cliente de primera calidad para tu tranquilidad.</p>
+                    <a href="{% url 'listar_vehiculos' %}" class="btn btn-primary">Más información</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
