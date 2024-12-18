@@ -227,7 +227,7 @@ AGREGANDO AUTENCIACIÓN DE USUARIOS
 		</div>
 		{% endif %}
 
-		<form action="{% url 'login' %}" method="post">
+		<form action="{% url 'login' %}?next={{ request.GET.next }}" method="post">
 			{% csrf_token %}
 			<div class="mb-3">
 				<label for="username" class="form-label">Email<span class="text-danger">*</span></label>
@@ -312,8 +312,19 @@ class RegisterView(View):
             return redirect(reverse('register'))  
         user = User.objects.create_user(username=email, email=email, password=password1, first_name=first_name, last_name=last_name)
         #user.is_active = False
-        UserProfile.objects.create(user=user, tipo='cliente')
-        user.save()
+        #UserProfile.objects.create(user=user, tipo='cliente')
+        
+		# Líneas para agregar permisos
+		#content_type = ContentType.objects.get_for_model(BoardsModel)
+		#es_miembro_1 = Permission.objects.get(
+        #        codename='es_miembro_1',
+        #        content_type = content_type
+        #)
+		
+		#user.user_permissions.add(es_miembro_1)
+		#user.is_staff = True
+		
+		user.save()
         user = authenticate(username=email, password=password1)
         if user is not None:
             login(request, user)
@@ -347,13 +358,15 @@ from django.contrib.auth import authenticate, login
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from .models import *
-
-
+from django.contrib.auth.models import User
+# Activar para asignar permisos
+#from django.contrib.contenttypes.models import ContentType
+#from django.contrib.auth.models import Permission
 
 28) Ajustes en urls.py de /web
 
 from django.urls import path
-from .views import index
+from .views import index, premium
 from web.views import CustomLoginView, CustomLogoutView, RegisterView
 
 urlpatterns = [
@@ -363,3 +376,57 @@ urlpatterns = [
     path('accounts/logout/', CustomLogoutView.as_view(), name='logout'),
     path('accounts/register/', RegisterView.as_view(), name='register'),
 ]
+
+29) Agregar el decorador @login_required a la vista "Premium".
+	(o bien, a la vista que quieres que sea solo visible por
+	 los usuarios autenticados.)
+	
+	Agregar el decorador @permission_required('vehiculo.visualizar_catalogo')
+	si desea que una vista sea accesible solo por aquellos usuarios
+	que tengan otorgado ese permiso.
+
+30) Nueva versión del header.html  (agrega botones de login, register y logout).
+	Hacer los ajustes de opciones de menú, enlaces, colores, etc.
+
+<nav class="navbar navbar-expand-lg bg-dark text-light">
+    <div class="container-fluid">
+      <a class="navbar-brand text-light" href="#">Vehículos</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-light" aria-current="page" href="#">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#">Agregar</a>
+          </li>
+		  <li class="nav-item">
+            <a class="nav-link text-light" href="#">Listar</a>
+          </li>
+          
+        </ul>
+
+        <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <form action="{% url 'logout' %}" method="post">
+            <label class="fs-5 text-warning me-3">Hola, {{ user.first_name }} </label>
+            {% csrf_token %}
+            <button class="btn btn-outline-danger" type="submit">Salir</button>
+          </form>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Login</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'register' %}" class="btn btn-outline-success btn-sm ms-2">Registro</a>
+        </li>
+        {% endif %}
+      </ul>
+      </div>
+    </div>
+  </nav>
+
